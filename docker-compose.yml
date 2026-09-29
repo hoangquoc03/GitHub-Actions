@@ -1,0 +1,19 @@
+services:
+  github-runner:
+    image: myoung34/github-runner:latest
+    container_name: quickbite-self-hosted-runner
+    restart: unless-stopped
+    environment:
+      RUNNER_SCOPE: repo
+      REPO_URL: https://github.com/hoangquoc03/GitHub-Actions
+      ACCESS_TOKEN: ${RUNNER_ACCESS_TOKEN:?Set RUNNER_ACCESS_TOKEN in .env}
+      RUNNER_NAME: quickbite-runner
+      LABELS: quickbite-ci
+      RUNNER_WORKDIR: /_work
+      UNSET_CONFIG_VARS: "true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - runner-work:/_work
+
+volumes:
+  runner-work:
