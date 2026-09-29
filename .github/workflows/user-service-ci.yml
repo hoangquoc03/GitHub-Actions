@@ -1,0 +1,31 @@
+name: User Service CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build Jar
+        run: |
+          chmod +x ./gradlew
+          ./gradlew bootJar
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: user-service-artifact
+          path: build/libs/*.jar
+          retention-days: 3
