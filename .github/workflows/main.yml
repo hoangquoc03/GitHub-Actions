@@ -14,13 +14,15 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Set up Java 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
 
       - name: Run Gradle quality checks
-        run: ./gradlew check -x test
+        run: |
+          chmod +x ./gradlew
+          ./gradlew check -x test
 
   unit_test:
     name: Unit tests
@@ -48,13 +50,15 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Set up Java 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
 
       - name: Run unit tests
-        run: ./gradlew test
+        run: |
+          chmod +x ./gradlew
+          ./gradlew test
 
   build:
     name: Build and package
@@ -67,13 +71,15 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Set up Java 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
 
       - name: Build JAR
-        run: ./gradlew bootJar
+        run: |
+          chmod +x ./gradlew
+          ./gradlew bootJar
 
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
